@@ -18,23 +18,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Guillermo Rauch's blog",
+  title: "Emmanuel Gutierrez's blog",
   description:
-    "Guillermo Rauch is the CEO and founder of Vercel, a software engineer, and the creator of Next.js, Mongoose, Socket.io and other open source libraries.",
+    "Emmanuel Gutierrez is a software engineer and high-performance web developer.",
   openGraph: {
-    title: "Guillermo Rauchg's blog",
+    title: "Emmanuel Gutierrez's blog",
     description:
-      "Guillermo Rauch is the CEO and founder of Vercel, a software engineer, and the creator of Next.js, Mongoose, Socket.io and other open source libraries.",
-    url: "https://rauchg.com",
-    siteName: "Guillermo Rauchg's blog",
+      "Emmanuel Gutierrez is a software engineer and high-performance web developer.",
+    url: "https://emg.dev",
+    siteName: "Emmanuel Gutierrez's blog",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@rauchg",
-    creator: "@rauchg",
+    site: "@emg_dev",
+    creator: "@emg_dev",
   },
-  metadataBase: new URL("https://rauchg.com"),
+  metadataBase: new URL("https://emg.dev"),
 };
 
 export const viewport = {
