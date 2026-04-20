@@ -35,7 +35,7 @@ What follows is my attempt to answer these. My approach is to examine the usage 
 
 ## 1. Pre rendered pages are not optional [#pre-rendered-pages-are-not-optional]
 
-<Callout emoji="⚡️" text="Pre-rendering is not (just) about SEO, it’s about performance. Consider the additional roundtrips to get scripts, styles, and subsequent API requests. In the future, consider HTTP 2.0 “pushing” of resources." />
+<Callout emoji="⚡️" text="Pre-rendering is not (just) about SEO, it's about performance. Consider the additional roundtrips to get scripts, styles, and subsequent API requests. In the future, consider HTTP 2.0 "pushing" of resources." />
 
 _Note: this title used to be "server-rendered". However, "pre-rendered" also encapsulates [static site generation](/2020/2019-in-review#static-is-the-new-dynamic), so it was edited accordingly._
 
@@ -91,7 +91,7 @@ Making a *qualitative assessment* of scripts and styles based on the informati
 
 A neat example of a SPA that does not incur in extra roundtrip penalties is a proof-of-concept clone of [StackOverflow in 4096 bytes](http://danlec.com/blog/stackoverflow-in-4096-bytes) (which can theoretically be delivered on the first post-handshake roundtrip of a TCP connection!). It manages to pull this off at the expense of cacheability, by inlining all the assets within the response. With [SPDY or HTTP/2 server push](http://www.chromium.org/spdy/link-headers-and-server-hint), it should be theoretically possible to deliver client code that's cacheable in a single hop. For the time being, rendering part or all of the page on the server is the most common solution to avoiding extra roundtrips.
 
-![Proof-of-concept SPA with inlined CSS and JS that doesn’t incur in extra roundtrips](/images/7-principles-of-rich-web-applications/NeV5qFDaVR.png)
+![Proof-of-concept SPA with inlined CSS and JS that doesn't incur in extra roundtrips](/images/7-principles-of-rich-web-applications/NeV5qFDaVR.png)
 
 A flexible enough system that can share rendering code between browser and server and provides tools for progressively loading scripts and styles will probably eliminate the colloquial distinction between *websites and webapps*. Both are reigned by the same UX principles. A blog and a CRM are fundamentally not that different. They have URLs, navigation, they show data to the user. Even a spreadsheet application, which traditionally relies a lot more on client side functionality, first needs to show the user the data he's interested in modifying. And doing so in the least number of network roundtrips is paramount.
 
@@ -103,7 +103,7 @@ It's helpful to refer to some of the initial discussions around the design of th
 
 ## 2. Act immediately on user input [#act-immediately-on-user-input]
 
-<Callout emoji="⚡️" text="JavaScript allows us to mask network latency altogether. Applying this as a design principle should even remove most spinners or “loading” messages from your applications. PJAX or TurboLinks miss out on opportunities to improve the perception of speed." />
+<Callout emoji="⚡️" text="JavaScript allows us to mask network latency altogether. Applying this as a design principle should even remove most spinners or "loading" messages from your applications. PJAX or TurboLinks miss out on opportunities to improve the perception of speed." />
 
 The first principle builds heavily on the idea of minimizing latency as the user interacts with your website.
 

@@ -11,20 +11,20 @@ export const metadata = {
 > The limits of my language mean the limits of my world.  
 > -- Ludwig Wittgenstein
 
-For the past few months I’ve been exclusively writing ECMAScript 6 code by taking advantage of transpilation <Ref id="1" /> to a currently supported version of JavaScript.
+For the past few months I've been exclusively writing ECMAScript 6 code by taking advantage of transpilation <Ref id="1" /> to a currently supported version of JavaScript.
 
-ECMAScript 6, henceforth ES6 and formerly ES.next, is the latest version of the specification. As of August 2014 no new features are being discussed, but details and edge cases are still being sorted out. It’s expected to be completed and published mid-2015.
+ECMAScript 6, henceforth ES6 and formerly ES.next, is the latest version of the specification. As of August 2014 no new features are being discussed, but details and edge cases are still being sorted out. It's expected to be completed and published mid-2015.
 
 Adopting ES6 has simultaneously resulted in increased productivity (by making my code more succinct) and eliminated entire classes of bugs by addressing common JavaScript gotchas.
 
-More importantly, however, it’s reaffirmed my belief in an evolutionary approach towards language and software design as opposed to [clean-slate recreation](http://www.sigcomm.org/sites/default/files/ccr/papers/2008/January/1341431-1341436.pdf).
+More importantly, however, it's reaffirmed my belief in an evolutionary approach towards language and software design as opposed to [clean-slate recreation](http://www.sigcomm.org/sites/default/files/ccr/papers/2008/January/1341431-1341436.pdf).
 
-This should be fairly obvious to you if you’ve been using CoffeeScript, which set out to focus on the good parts of JS and hide the broken ones. ES6 has been able to adopt a lot of CoffeeScript’s great innovations in a non-disruptive way, to such an extent that some have even questioned its [role moving forward](https://github.com/jashkenas/coffeescript/issues/3859).
+This should be fairly obvious to you if you've been using CoffeeScript, which set out to focus on the good parts of JS and hide the broken ones. ES6 has been able to adopt a lot of CoffeeScript's great innovations in a non-disruptive way, to such an extent that some have even questioned its [role moving forward](https://github.com/jashkenas/coffeescript/issues/3859).
 
 > For all intents and purposes, JavaScript has merged CoffeeScript into master. I call that a victory for making things and trying them out.  
 > — [raganwald](https://twitter.com/raganwald/status/555386257233027073)
 
-Instead of making a thorough review of [all the new features](https://github.com/lukehoban/es6features), I’ll point out the most interesting ones. To incentivize developers to upgrade, new languages or frameworks need to (1) feature a compelling compatibility story and (2) give you a [big enough carrot](http://teddziuba.tumblr.com/post/26426290981/python-3s-marketing-problem).
+Instead of making a thorough review of [all the new features](https://github.com/lukehoban/es6features), I'll point out the most interesting ones. To incentivize developers to upgrade, new languages or frameworks need to (1) feature a compelling compatibility story and (2) give you a [big enough carrot](http://teddziuba.tumblr.com/post/26426290981/python-3s-marketing-problem).
 
 ## The module syntax [#the-module-syntax]
 
@@ -42,28 +42,28 @@ function crc32 () {
 }
 ```
 
-With the caveat, of course, that it introduces a single fixed global name that other parts of the code will have to refer to. And from the perspective of the code that uses that `crc32` function, there’s no way to declare the dependency. One just has to assume the function will exist prior to the code’s interpretation.
+With the caveat, of course, that it introduces a single fixed global name that other parts of the code will have to refer to. And from the perspective of the code that uses that `crc32` function, there's no way to declare the dependency. One just has to assume the function will exist prior to the code's interpretation.
 
 With this situation in mind, Node.JS led the way with the introduction of the `require` runtime function and the `module.exports` and `exports` objects. Despite succeeding in creating a thriving ecosystem of modules around it, the interoperability possibilities were still somewhat limited.
 
 A common scenario to illustrate this is the generation of browser bundles of modules, with tools like [browserify](http://browserify.org/) or [webpack](https://github.com/webpack/webpack). These can only be conceived because they treat `require()` as syntax, effectively ridding it of its inherent dynamism.
 
-If you’re trying to transport code to the browser, the following is not subject to static analysis and therefore breaks:
+If you're trying to transport code to the browser, the following is not subject to static analysis and therefore breaks:
 
 ```
-require(woot() + ‘_module.js’)
+require(woot() + ‘_module.js')
 ```
 
-In other words, the packer’s algorithm can’t possibly know what `woot()` means ahead of time.
+In other words, the packer's algorithm can't possibly know what `woot()` means ahead of time.
 
-ES6 has introduced the right set of restrictions while accomodating for most existing use cases, drawing inspiration from most of the informally-specified ad-hoc module systems out there, like jQuery’s `$`.
+ES6 has introduced the right set of restrictions while accomodating for most existing use cases, drawing inspiration from most of the informally-specified ad-hoc module systems out there, like jQuery's `$`.
 
 The syntax does take some getting used to. The most common pattern for dependency definitions is surprisingly impractical.
 
 The following code:
 
 ```
-import crc32 from ‘crc32’
+import crc32 from ‘crc32'
 ```
 
 works for
@@ -81,7 +81,7 @@ export function crc32(){}
 the latter is considered a *named export* and requires the `{ }` syntax in the import statement:
 
 ```
-import { crc32 } from ‘crc32’
+import { crc32 } from ‘crc32'
 ```
 
 In other words, the simplest (and arguably most desirable) form of module definition requires the extra default keyword. Or in the absence of that, the usage of `{ }` when importing.
@@ -90,18 +90,18 @@ In other words, the simplest (and arguably most desirable) form of module defini
 
 One of the most common patterns that has emerged in modern JavaScript code is the usage of option objects.
 
-So common is this practice that newly specified browser APIs, like WHATWG’s [fetch](https://fetch.spec.whatwg.org/) (a modern substitute for XMLHttpRequest) follow it:
+So common is this practice that newly specified browser APIs, like WHATWG's [fetch](https://fetch.spec.whatwg.org/) (a modern substitute for XMLHttpRequest) follow it:
 
 ```
-fetch(‘/users’, {
-  method: ‘POST’,
+fetch(‘/users', {
+  method: ‘POST',
   headers: {
-    Accept: ‘application/json’,
-    ‘Content-Type’: ‘application/json’
+    Accept: ‘application/json',
+    ‘Content-Type': ‘application/json'
   },
   body: JSON.stringify({
-    first: ‘Guillermo’,
-    last: ‘Rauch’
+    first: ‘Guillermo',
+    last: ‘Rauch'
   })
 })
 ```
@@ -121,9 +121,9 @@ fetch('/users', 'POST', null, null, {
 }))
 ```
 
-On the implementation side of things, however, things haven’t looked
-nearly as pretty. Looking at the function’s declaration signature is no
-longer descriptive of its input’s possibilities:
+On the implementation side of things, however, things haven't looked
+nearly as pretty. Looking at the function's declaration signature is no
+longer descriptive of its input's possibilities:
 
 ```jsx
 function fetch(url, opts){
@@ -140,7 +140,7 @@ var headers = opts.headers || {}
 var method = opts.method || 'GET'`
 ```
 
-And unfortunately for us, despite being common, the `||` practice actually introduces subtle bugs. In this case we’re not admitting that `opts.body` could be 0, so robust code would most likely look like:
+And unfortunately for us, despite being common, the `||` practice actually introduces subtle bugs. In this case we're not admitting that `opts.body` could be 0, so robust code would most likely look like:
 
 ```
 var body = opts.body === undefined ? '' : opts.body
@@ -174,13 +174,13 @@ This is reminiscent to me of the expressiveness granted by `with`, without the m
 
 ## New Conventions [#new-conventions]
 
-Some parts of the language have been altogether replaced with better alternatives that’ll quickly become a new default for how you write JavaScript.
+Some parts of the language have been altogether replaced with better alternatives that'll quickly become a new default for how you write JavaScript.
 
-I’ll go over some of them.
+I'll go over some of them.
 
 ### let/const over var [#let-and-const-over-var]
 
-Instead of writing `var x = y` you’ll most likely be writing `let x = y`. let scopes your variable definition to the block it’s defined in:
+Instead of writing `var x = y` you'll most likely be writing `let x = y`. let scopes your variable definition to the block it's defined in:
 
 ```
 if (foo) {
@@ -218,7 +218,7 @@ let str = `
 
 ### class over prototypes [#class-over-prototypes]
 
-Defining a class was cumbersome and required a deep understanding of the language internals. Even though it’s still obviously useful to grasp the inner-workings, the barrier to entry to newcomers was unnecessarily high.
+Defining a class was cumbersome and required a deep understanding of the language internals. Even though it's still obviously useful to grasp the inner-workings, the barrier to entry to newcomers was unnecessarily high.
 
 `class` offers syntax sugar for defining a constructor `function`, the methods within `prototype` and getters / setters. It also provides prototypical inheritance with syntax alone (no utilities or 3rd party modules).
 
@@ -237,7 +237,7 @@ I initially was surprised to learn classes are not hoisted (explanation [here](h
 
 Not only is `(x, y) => {}` shorter to write than `function (x,y) {}`, but the behavior of this within the function body will most likely refer to what you want.
 
-The so-called “fat arrow” functions are *lexically bound*. Consider the example of a method within a class that launches two timers:
+The so-called "fat arrow" functions are *lexically bound*. Consider the example of a method within a class that launches two timers:
 
 ```
 class Person {
@@ -263,13 +263,13 @@ To the dismay of newcomers to the language, the first timer (using `function`) w
 
 Asynchronous code execution has been around for almost the entire history of the language. `setTimeout`, after all, was introduced around the time JavaScript 1.0 came out.
 
-But arguably, the language didn’t *really support* it. The return value of function calls that scheduled “future work” is normally `undefined`, or in the case of `setTimeout` a `Number`.
+But arguably, the language didn't *really support* it. The return value of function calls that scheduled "future work" is normally `undefined`, or in the case of `setTimeout` a `Number`.
 
 The introduction of `Promise` addresses this, and by doing so fills a very large hole of interoperability and [composability](https://blog.jcoglan.com/2011/03/11/promises-are-the-monad-of-asynchronous-programming/).
 
-On one hand, APIs you’ll encounter become wholly more predictable. As a test of this, consider the new `fetch` API. How does it work beyond the signature we described? You guessed right. It returns a `Promise`.
+On one hand, APIs you'll encounter become wholly more predictable. As a test of this, consider the new `fetch` API. How does it work beyond the signature we described? You guessed right. It returns a `Promise`.
 
-If you’ve used Node.JS in the past, you know that there’s an informal contract that callbacks will follow the signature:
+If you've used Node.JS in the past, you know that there's an informal contract that callbacks will follow the signature:
 
 ```
 function (err, result){}
@@ -281,7 +281,7 @@ Also informally specified is the idea that callbacks will fire *only once*. And 
 
 ES6 is gaining a lot of momentum in the ecosystem. [Chrome](https://twitter.com/addyosmani/status/541978036904554496) and [io.js](https://iojs.org/en/es6.html) have already incorporated some of its features. A lot has already been written about it.
 
-But what’s worth pointing out is that this momentum has been largely enabled by *transpilation* rather than actual support. [Great tools](http://babeljs.io/) have emerged to enable transpiling and polyfilling, and browsers have over time added proper debugging and error reporting support for them (through source maps).
+But what's worth pointing out is that this momentum has been largely enabled by *transpilation* rather than actual support. [Great tools](http://babeljs.io/) have emerged to enable transpiling and polyfilling, and browsers have over time added proper debugging and error reporting support for them (through source maps).
 
 The evolution of the language and its proposed features are outpacing implementation. As mentioned above, `Promise` is genuinely exciting as a building block alone, but consider the benefits of solving [the callback problem](http://tirania.org/blog/archive/2013/Aug-15.html) once and for all.
 
@@ -297,10 +297,10 @@ async function uploadAvatar(){
 
 Even though the spec is in its [early discussions](https://esdiscuss.org/notes/2014-01-30#async-await), the same tool that compiles ES6 to ES5 already [enables it](http://babeljs.io/docs/usage/transformers/#async-to-generator).
 
-There’s still substantial work left to do to make sure the process of adopting new language syntax and APIs becomes even more friction-less to those getting started.
+There's still substantial work left to do to make sure the process of adopting new language syntax and APIs becomes even more friction-less to those getting started.
 
 But one thing is for certain: we must embrace the moving target.
 
 <FootNotes>
-  <FootNote id="1">I use the word “transpilation” throughout the article on the basis of its popularity to refer to JavaScript source-to-source compilation. That aside, the merits of the term are [technically debatable](https://twitter.com/fogus/status/550717447163355136).</FootNote>
+  <FootNote id="1">I use the word "transpilation" throughout the article on the basis of its popularity to refer to JavaScript source-to-source compilation. That aside, the merits of the term are [technically debatable](https://twitter.com/fogus/status/550717447163355136).</FootNote>
 </FootNotes>
