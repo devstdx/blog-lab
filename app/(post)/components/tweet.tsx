@@ -6,7 +6,6 @@ import {
   TweetSkeleton,
   type TweetProps,
 } from "react-tweet";
-import { kv as redis } from "@vercel/kv";
 import { Caption } from "./caption";
 import "./tweet.css";
 
@@ -16,30 +15,14 @@ interface TweetArgs {
 }
 
 async function getAndCacheTweet(id: string): Promise<TweetType | undefined> {
-  // we first prioritize getting a fresh tweet
   try {
     const tweet = await getTweet(id);
-
     // @ts-ignore
-    if (tweet && !tweet.tombstone) {
-      // we populate the cache if we have a fresh tweet
-      if (redis) {
-        await redis.set(`tweet:${id}`, tweet);
-      }
-      return tweet;
-    }
+    if (tweet && !tweet.tombstone) return tweet;
   } catch (error) {
     console.error("tweet fetch error", error);
   }
-
-  if (!redis) return undefined;
-
-  const cachedTweet: TweetType | null = await redis.get(`tweet:${id}`);
-
-  // @ts-ignore
-  if (!cachedTweet || cachedTweet.tombstone) return undefined;
-
-  return cachedTweet;
+  return undefined;
 }
 
 const TweetContent = async ({ id, components }: TweetProps) => {
