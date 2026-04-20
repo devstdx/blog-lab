@@ -38,11 +38,11 @@ export function Header({ posts }: { posts: Post[] }) {
           <span className="hidden md:inline">
             <span>
               <a
-                href="https://twitter.com/rauchg"
+                href="https://x.com/emg_dev"
                 className="hover:text-neutral-800 dark:hover:text-neutral-400"
                 target="_blank"
               >
-                @rauchg
+                @emg_dev
               </a>
             </span>
 
@@ -70,6 +70,8 @@ export function Header({ posts }: { posts: Post[] }) {
   );
 }
 
+import { recordView } from "@/app/actions";
+
 function Views({ id, mutate, defaultValue }) {
   const views = defaultValue;
   const didLogViewRef = useRef(false);
@@ -77,13 +79,11 @@ function Views({ id, mutate, defaultValue }) {
   useEffect(() => {
     if ("development" === process.env.NODE_ENV) return;
     if (!didLogViewRef.current) {
-      const url = "/api/view?incr=1&id=" + encodeURIComponent(id);
-      fetch(url)
-        .then(res => res.json())
-        .then(obj => {
-          mutate(obj);
-        })
-        .catch(console.error);
+      recordView(id).then(res => {
+        if (res?.success) {
+          mutate();
+        }
+      });
       didLogViewRef.current = true;
     }
   });
