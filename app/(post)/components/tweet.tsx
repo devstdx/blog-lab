@@ -6,7 +6,7 @@ import {
   TweetSkeleton,
   type TweetProps,
 } from "react-tweet";
-import redis from "@/app/lib/kv";
+import { kv as redis } from "@vercel/kv";
 import { Caption } from "./caption";
 import "./tweet.css";
 
