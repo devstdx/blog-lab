@@ -18,21 +18,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Emmanuel Gutierrez's blog",
+  title: "Emmanuel Gutiérrez — Strategic Data & Execution",
   description:
-    "Emmanuel Gutierrez is a software engineer and high-performance web developer.",
+    "Arquitecto de estrategias digitales, inteligencia de datos y disrupción financiera.",
   openGraph: {
-    title: "Emmanuel Gutierrez's blog",
+    title: "Emmanuel Gutiérrez — Strategic Data & Execution",
     description:
-      "Emmanuel Gutierrez is a software engineer and high-performance web developer.",
+      "Arquitecto de estrategias digitales, inteligencia de datos y disrupción financiera.",
     url: "https://emg.dev",
-    siteName: "Emmanuel Gutierrez's blog",
+    siteName: "Emmanuel Gutiérrez",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@emg_dev",
-    creator: "@emg_dev",
+    site: "@EMMANUELGTCZ",
+    creator: "@EMMANUELGTCZ",
   },
   metadataBase: new URL("https://emg.dev"),
 };
