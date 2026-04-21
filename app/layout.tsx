@@ -27,7 +27,14 @@ export const metadata = {
       "Arquitecto de estrategias digitales, inteligencia de datos y disrupción financiera.",
     url: "https://emg.dev",
     siteName: "Emmanuel Gutiérrez",
-    images: ["/opengraph-image"],
+    images: [
+      {
+        url: "/og/default.png",
+        width: 1200,
+        height: 630,
+        alt: "Emmanuel Gutiérrez — Strategic Data & Execution",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
